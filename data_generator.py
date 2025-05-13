@@ -11,3 +11,7 @@ def generate_phone_number():
 def generate_tomorrow_date():
     tomorrow = datetime.now() + timedelta(days=1)
     return tomorrow.strftime("%d.%m.%Y")
+
+def generate_date():
+    tomorrow = datetime.now() + timedelta(days=3)
+    return tomorrow.strftime("%d.%m.%Y")
