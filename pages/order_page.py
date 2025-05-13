@@ -1,15 +1,13 @@
-from selenium.webdriver.support.ui import WebDriverWait
+
 from selenium.webdriver.support import expected_conditions as EC
 from locators.order_page_locators import *
 from data_generator import *
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from pages.main_page import MainPage
 
 
-class OrderPage:
-    def __init__(self, driver):
-        self.driver = driver
-        self.wait = WebDriverWait(driver, 20)
+class OrderPage (MainPage):
 
     def fill_personal_data(self, name="Илья"):
         # Заполнение первой страницы

@@ -1,7 +1,7 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from locators.order_page_locators import MainPageLocators
-from selenium.webdriver.common.by import By
+
 
 class MainPage:
     def __init__(self, driver):
