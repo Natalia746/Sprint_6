@@ -1,99 +1,89 @@
-
-from selenium.webdriver.support import expected_conditions as EC
+# order_page.py
+from .base_page import BasePage
 from locators.order_page_locators import *
-from data_generator import *
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from pages.main_page import MainPage
+from data_generator import generate_cyrillic_surname, generate_phone_number, generate_tomorrow_date, generate_date
+from selenium.webdriver import Keys
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import WebDriverWait
 
 
-class OrderPage (MainPage):
+class OrderPage(BasePage):
+    def click_header_order_button(self):
+        self.click_element(MainPageLocators.ORDER_BUTTON_HEADER)
 
-    def fill_personal_data(self, name="Илья"):
-        # Заполнение первой страницы
-        self._fill_field(OrderPageLocators.NAME_INPUT, name)
-        self._fill_field(OrderPageLocators.SURNAME_INPUT, generate_cyrillic_surname())
-        self._fill_field(OrderPageLocators.ADDRESS_INPUT, "г. Москва, ул. Профсоюзная")
+    def click_scooter_logo(self):
+        self.click_element(MainPageLocators.SCOOTER_LOGO)
+
+    def click_yandex_logo(self):
+        self.click_element(MainPageLocators.YANDEX_LOGO)
+
+    def scroll_to_button_bottom(self):
+        self.scroll_to_element(MainPageLocators.ORDER_BUTTON_FOOTER)
+
+    def fill_personal_data(self, name="Илья", address="г. Москва, ул. Профсоюзная"):
+        self.fill_field(OrderPageLocators.NAME_INPUT, name)
+        self.fill_field(OrderPageLocators.SURNAME_INPUT, generate_cyrillic_surname())
+        self.fill_field(OrderPageLocators.ADDRESS_INPUT, address)
         self._select_metro_station()
-        self._fill_field(OrderPageLocators.PHONE_INPUT, generate_phone_number())
-        self._click(OrderPageLocators.NEXT_BUTTON)
+        self.fill_field(OrderPageLocators.PHONE_INPUT, generate_phone_number())
+        self.click_element(OrderPageLocators.NEXT_BUTTON)
+
+    def _select_metro_station(self):
+        self.click_element(OrderPageLocators.METRO_INPUT)
+        self.click_element(OrderPageLocators.METRO_STATION)
+
+    def fill_rental_data(self):
+        self.fill_field(OrderPageLocators.DATE_INPUT, generate_tomorrow_date())
+        date_field = self.wait.until(
+            EC.visibility_of_element_located(OrderPageLocators.DATE_INPUT)
+        )
+        date_field.send_keys(Keys.ENTER)
+
+        # Ожидание закрытия календаря
+        self.wait.until(
+            EC.invisibility_of_element_located((By.CLASS_NAME, "react-datepicker"))
+        )
+        self.click_element(OrderPageLocators.RENTAL_PERIOD)
+        self.click_element(OrderPageLocators.RENTAL_OPTION)
+        self.click_element(OrderPageLocators.COLOR_CHECKBOX_BLACK)
+        self.fill_field(OrderPageLocators.COMMENT_INPUT, "Я вас жду у магазина")
+        self.click_element(OrderPageLocators.ORDER_BUTTON_BOTTOM)
+
+    def confirm_order(self):
+        self.click_element(OrderPageLocators.CONFIRM_BUTTON)
+        return self.is_element_visible(OrderPageLocators.SUCCESS_TITLE).is_displayed()
 
     def fill_personal_data_for_bottom(self, name="александр"):
         # Заполнение первой страницы для нижней кнопки
-        self._fill_field(OrderPageLocators.NAME_INPUT, name)
-        self._fill_field(OrderPageLocators.SURNAME_INPUT, generate_cyrillic_surname())
-        self._fill_field(OrderPageLocators.ADDRESS_INPUT, "Большая Якиманка, 38")
+        self.fill_field(OrderPageLocators.NAME_INPUT, name)
+        self.fill_field(OrderPageLocators.SURNAME_INPUT, generate_cyrillic_surname())
+        self.fill_field(OrderPageLocators.ADDRESS_INPUT, "Большая Якиманка, 38")
         self._select_metro_station()
-        self._fill_field(OrderPageLocators.PHONE_INPUT, generate_phone_number())
-        self._click(OrderPageLocators.NEXT_BUTTON)
-
-    def fill_rental_data(self):
-        # Заполнение второй страницы
-        self._fill_field(OrderPageLocators.DATE_INPUT, generate_tomorrow_date())
-
-        # Явное закрытие календаря через Enter + проверка
-        date_field = self.wait.until(
-            EC.visibility_of_element_located(OrderPageLocators.DATE_INPUT)
-        )
-        date_field.send_keys(Keys.ENTER)
-
-        # Ожидание закрытия календаря
-        self.wait.until(
-            EC.invisibility_of_element_located((By.CLASS_NAME, "react-datepicker"))
-        )
-
-        # Остальные действия
-        self._select_rental_period()
-        self._click(OrderPageLocators.COLOR_CHECKBOX_BLACK)
-        self._fill_field(OrderPageLocators.COMMENT_INPUT, "Я вас жду у магазина")
-        self._click(OrderPageLocators.ORDER_BUTTON_BOTTOM)
+        self.fill_field(OrderPageLocators.PHONE_INPUT, generate_phone_number())
+        self.click_element(OrderPageLocators.NEXT_BUTTON)
 
     def fill_rental_data_for_bottom(self):
-        # Заполнение второй страницы
-        self._fill_field(OrderPageLocators.DATE_INPUT, generate_date())
-
-        # Явное закрытие календаря через Enter + проверка
+        self.fill_field(OrderPageLocators.DATE_INPUT, generate_date())
         date_field = self.wait.until(
             EC.visibility_of_element_located(OrderPageLocators.DATE_INPUT)
         )
         date_field.send_keys(Keys.ENTER)
 
-        # Ожидание закрытия календаря
+
         self.wait.until(
             EC.invisibility_of_element_located((By.CLASS_NAME, "react-datepicker"))
         )
+        self.click_element(OrderPageLocators.RENTAL_PERIOD)
+        self.click_element(OrderPageLocators.RENTAL_OPTION)
+        self.click_element(OrderPageLocators.COLOR_CHECKBOX_BLACK)
+        self.fill_field(OrderPageLocators.COMMENT_INPUT, "")
+        self.click_element(OrderPageLocators.ORDER_BUTTON_BOTTOM)
 
-        # Остальные действия
-        self._select_rental_period_bottom()
-        self._click(OrderPageLocators.COLOR_CHECKBOX_GREY)
-        self._fill_field(OrderPageLocators.COMMENT_INPUT, " ")
-        self._click(OrderPageLocators.ORDER_BUTTON_BOTTOM)
 
-    def confirm_order(self):
-        # Подтверждение заказа
-        self.wait.until(EC.visibility_of_element_located(OrderPageLocators.MODAL_WINDOW))
-        self._click(OrderPageLocators.CONFIRM_BUTTON)
-        return self.wait.until(
-            EC.visibility_of_element_located(OrderPageLocators.SUCCESS_TITLE)
-        ).is_displayed()
-
-    def _fill_field(self, locator, value):
-        element = self.wait.until(EC.element_to_be_clickable(locator))
-        element.clear()
-        element.send_keys(value)
-
-    def _click(self, locator):
-        self.wait.until(EC.element_to_be_clickable(locator)).click()
-
-    def _select_metro_station(self):
-        self._click(OrderPageLocators.METRO_INPUT)
-        self._click(OrderPageLocators.METRO_STATION)
-
-    def _select_rental_period(self):
-        self._click(OrderPageLocators.RENTAL_PERIOD)
-        self._click(OrderPageLocators.RENTAL_OPTION)
-
-    def _select_rental_period_bottom(self):
-        self._click(OrderPageLocators.RENTAL_PERIOD)
-        self._click(OrderPageLocators.RENTAL_OPTION_BOTTOM)
-
+def switch_to_new_window(self):
+        # Переключение на новую вкладку
+        self.driver.switch_to.window(self.driver.window_handles[1])
+        # Ожидание, пока URL не станет отличным от "about:blank"
+        WebDriverWait(self.driver, 10).until(
+            lambda driver: driver.current_url != "about:blank"
+        )

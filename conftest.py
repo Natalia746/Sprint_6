@@ -1,6 +1,8 @@
 import pytest
 from selenium import webdriver
 from pages.faq_page import FAQPage
+from pages.order_page import OrderPage
+from curl import *
 
 @pytest.fixture(scope="function")
 def driver():
@@ -11,6 +13,11 @@ def driver():
 
 @pytest.fixture
 def faq_page(driver):
-    page = FAQPage(driver)
+    page = FAQPage(driver, base_url)
     page.open()
+    return page
+
+@pytest.fixture
+def order_page(driver):  # Фикстура для страницы заказа
+    page = OrderPage(driver, base_url)
     return page
