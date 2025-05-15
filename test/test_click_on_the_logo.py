@@ -13,6 +13,7 @@ class TestTrafficFromClick:
             order_page.open()
         with allure.step("Переход на главную страницу"):
             order_page.click_scooter_logo()
+        with allure.step("Проверка открывшейся страницы"):
             assert order_page.driver.current_url == base_url
 
     @allure.feature("Нажатие на логотип Яндекса")
@@ -24,22 +25,16 @@ class TestTrafficFromClick:
         with allure.step("Переход на страницу Дзена"):
             order_page.click_yandex_logo()
 
-            # Ожидание открытия нового окна
             WebDriverWait(order_page.driver, 15).until(
                 EC.number_of_windows_to_be(2)
             )
 
-            # Переключение на новую вкладку
             order_page.driver.switch_to.window(
                 order_page.driver.window_handles[1]
             )
-
-            # Явное ожидание загрузки Dzen
             WebDriverWait(order_page.driver, 15).until(
                 EC.url_contains("dzen.ru")
             )
-
-            # Проверка URL
             assert "dzen.ru" in order_page.driver.current_url
 
         with allure.step("Возврат в исходное окно"):

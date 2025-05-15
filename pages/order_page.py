@@ -75,7 +75,7 @@ class OrderPage(BasePage):
         )
         self.click_element(OrderPageLocators.RENTAL_PERIOD)
         self.click_element(OrderPageLocators.RENTAL_OPTION)
-        self.click_element(OrderPageLocators.COLOR_CHECKBOX_BLACK)
+        self.click_element(OrderPageLocators.COLOR_CHECKBOX_GREY)
         self.fill_field(OrderPageLocators.COMMENT_INPUT, "")
         self.click_element(OrderPageLocators.ORDER_BUTTON_BOTTOM)
 
