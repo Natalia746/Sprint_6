@@ -22,6 +22,7 @@ class OrderPageLocators:
     METRO_STATION = (By.XPATH, "//li[@data-value='3']")
     RENTAL_PERIOD = (By.CLASS_NAME, "Dropdown-placeholder")
     RENTAL_OPTION = (By.CSS_SELECTOR, "div.Dropdown-option:nth-child(2)")
+    RENTAL_PERIOD_FOR_BOTTOM = (By.CLASS_NAME, "Dropdown-placeholder")
     COLOR_CHECKBOX_BLACK = (By.ID, "black")
     COLOR_CHECKBOX_GREY = (By.ID, "grey")
     RENTAL_OPTION_BOTTOM = (By.CSS_SELECTOR, "div.Dropdown-option:nth-child(6)")

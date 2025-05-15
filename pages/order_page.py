@@ -96,3 +96,4 @@ class OrderPage (MainPage):
     def _select_rental_period_bottom(self):
         self._click(OrderPageLocators.RENTAL_PERIOD)
         self._click(OrderPageLocators.RENTAL_OPTION_BOTTOM)
+
