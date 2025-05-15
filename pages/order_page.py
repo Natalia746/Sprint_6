@@ -54,7 +54,7 @@ class OrderPage(BasePage):
         return self.is_element_visible(OrderPageLocators.SUCCESS_TITLE).is_displayed()
 
     def fill_personal_data_for_bottom(self, name="александр"):
-        # Заполнение первой страницы для нижней кнопки
+
         self.fill_field(OrderPageLocators.NAME_INPUT, name)
         self.fill_field(OrderPageLocators.SURNAME_INPUT, generate_cyrillic_surname())
         self.fill_field(OrderPageLocators.ADDRESS_INPUT, "Большая Якиманка, 38")
@@ -80,10 +80,3 @@ class OrderPage(BasePage):
         self.click_element(OrderPageLocators.ORDER_BUTTON_BOTTOM)
 
 
-def switch_to_new_window(self):
-        # Переключение на новую вкладку
-        self.driver.switch_to.window(self.driver.window_handles[1])
-        # Ожидание, пока URL не станет отличным от "about:blank"
-        WebDriverWait(self.driver, 10).until(
-            lambda driver: driver.current_url != "about:blank"
-        )

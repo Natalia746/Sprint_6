@@ -12,7 +12,9 @@ class TestFullOrderFlow:
 
         with allure.step("Начало оформления заказа"):
             order_page.click_header_order_button()
+        with allure.step("Заполнение формы Для кого самокат"):
             order_page.fill_personal_data()
+        with allure.step("Заполнение формы Про аренду"):
             order_page.fill_rental_data()
 
         with allure.step("Подтверждение заказа"):
@@ -29,7 +31,9 @@ class TestFullOrderFlow:
         with allure.step("Прокрутка и начало оформления"):
             order_page.scroll_to_button_bottom()
             order_page.click_element(MainPageLocators.ORDER_BUTTON_FOOTER)
+        with allure.step("Заполнение формы Для кого самокат"):
             order_page.fill_personal_data_for_bottom()
+        with allure.step("Заполнение формы Про аренду"):
             order_page.fill_rental_data_for_bottom()
 
         with allure.step("Подтверждение заказа"):
