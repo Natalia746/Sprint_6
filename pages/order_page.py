@@ -4,7 +4,7 @@ from locators.order_page_locators import *
 from data_generator import generate_cyrillic_surname, generate_phone_number, generate_tomorrow_date, generate_date
 from selenium.webdriver import Keys
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support import WebDriverWait
+
 
 
 class OrderPage(BasePage):
