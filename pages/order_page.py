@@ -80,3 +80,4 @@ class OrderPage(BasePage):
         self.click_element(OrderPageLocators.ORDER_BUTTON_BOTTOM)
 
 
+

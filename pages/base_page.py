@@ -30,3 +30,25 @@ class BasePage:
 
     def is_element_visible(self, locator):
         return self.wait.until(EC.visibility_of_element_located(locator))
+
+    def get_current_url(self):
+        return self.driver.current_url
+
+    def switch_to_new_window(self, window_index):
+        self.driver.switch_to.window(self.driver.window_handles[window_index])
+
+    def close_current_window(self):
+        self.driver.close()
+
+    def wait_for_number_of_windows(self, expected_number, timeout=10):
+        WebDriverWait(self.driver, timeout).until(
+            lambda d: len(d.window_handles) == expected_number
+        )
+
+    def wait_for_url_contains(self, text, timeout=15):
+        """
+        Ожидает, пока URL не будет содержать указанный текст.
+        """
+        WebDriverWait(self.driver, timeout).until(
+            EC.url_contains(text)
+        )

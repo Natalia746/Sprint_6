@@ -1,20 +1,19 @@
 import allure
-from curl import *
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
 
 
 @allure.epic("Переход на главную страницу при нажатии на логотип Самоката")
 class TestTrafficFromClick:
     @allure.feature("Нажатие на логотип Самоката")
     @allure.story("Позитивный сценарий оформления")
-    def test_successful_transition_click_logo(self, order_page):
+    def test_successful_transition_click_logo(self, order_page, base_url):
         with allure.step("Инициализация страницы заказа"):
             order_page.open()
+
         with allure.step("Переход на главную страницу"):
             order_page.click_scooter_logo()
+
         with allure.step("Проверка открывшейся страницы"):
-            assert order_page.driver.current_url == base_url
+            assert order_page.get_current_url() == base_url
 
     @allure.feature("Нажатие на логотип Яндекса")
     @allure.story("Позитивный сценарий оформления")
@@ -24,21 +23,12 @@ class TestTrafficFromClick:
 
         with allure.step("Переход на страницу Дзена"):
             order_page.click_yandex_logo()
+            order_page.wait_for_number_of_windows(2)
+            order_page.switch_to_new_window(1)
 
-            WebDriverWait(order_page.driver, 15).until(
-                EC.number_of_windows_to_be(2)
-            )
-
-            order_page.driver.switch_to.window(
-                order_page.driver.window_handles[1]
-            )
-            WebDriverWait(order_page.driver, 15).until(
-                EC.url_contains("dzen.ru")
-            )
-            assert "dzen.ru" in order_page.driver.current_url
+            order_page.wait_for_url_contains("dzen.ru")
+            assert "dzen.ru" in order_page.get_current_url()
 
         with allure.step("Возврат в исходное окно"):
-            order_page.driver.close()
-            order_page.driver.switch_to.window(
-                order_page.driver.window_handles[0]
-            )
+            order_page.close_current_window()
+            order_page.switch_to_new_window(0)

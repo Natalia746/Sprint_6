@@ -4,6 +4,10 @@ from pages.faq_page import FAQPage
 from pages.order_page import OrderPage
 from curl import *
 
+@pytest.fixture
+def base_url():
+    return "https://qa-scooter.praktikum-services.ru/"  # Замените на ваш URL
+
 @pytest.fixture(scope="function")
 def driver():
     driver = webdriver.Firefox()
@@ -12,12 +16,13 @@ def driver():
     driver.quit()
 
 @pytest.fixture
-def faq_page(driver):
+def faq_page(driver, base_url):
     page = FAQPage(driver, base_url)
     page.open()
     return page
 
 @pytest.fixture
-def order_page(driver):  # Фикстура для страницы заказа
+def order_page(driver, base_url):
     page = OrderPage(driver, base_url)
     return page
+
