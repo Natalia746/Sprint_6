@@ -1,5 +1,5 @@
 import allure
-from locators.order_page_locators import MainPageLocators, OrderPageLocators
+
 
 @allure.epic("Полный цикл оформления заказа")
 class TestFullOrderFlow:
@@ -30,7 +30,7 @@ class TestFullOrderFlow:
 
         with allure.step("Прокрутка и начало оформления"):
             order_page.scroll_to_button_bottom()
-            order_page.click_element(MainPageLocators.ORDER_BUTTON_FOOTER)
+            order_page.click_button_order_bottom()
         with allure.step("Заполнение формы Для кого самокат"):
             order_page.fill_personal_data_for_bottom()
         with allure.step("Заполнение формы Про аренду"):
@@ -38,5 +38,6 @@ class TestFullOrderFlow:
 
         with allure.step("Подтверждение заказа"):
             assert order_page.confirm_order(), "Окно подтверждения заказа не отобразилось"
+
 
 

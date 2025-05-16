@@ -2,11 +2,11 @@ import pytest
 from selenium import webdriver
 from pages.faq_page import FAQPage
 from pages.order_page import OrderPage
-from curl import *
+import curl
 
 @pytest.fixture
 def base_url():
-    return "https://qa-scooter.praktikum-services.ru/"  # Замените на ваш URL
+    return curl.base_url
 
 @pytest.fixture(scope="function")
 def driver():

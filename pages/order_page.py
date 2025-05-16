@@ -1,25 +1,31 @@
-# order_page.py
+import allure
 from .base_page import BasePage
 from locators.order_page_locators import *
-from data_generator import generate_cyrillic_surname, generate_phone_number, generate_tomorrow_date, generate_date
+from data_generator import *
 from selenium.webdriver import Keys
 from selenium.webdriver.support import expected_conditions as EC
 
 
 
 class OrderPage(BasePage):
+
+    @allure.step("Нажать на верхнюю кнопку Заказать")
     def click_header_order_button(self):
         self.click_element(MainPageLocators.ORDER_BUTTON_HEADER)
 
+    @allure.step("Нажать на логотип Самоката")
     def click_scooter_logo(self):
         self.click_element(MainPageLocators.SCOOTER_LOGO)
 
+    @allure.step("Нажать на логотип Яндекса")
     def click_yandex_logo(self):
         self.click_element(MainPageLocators.YANDEX_LOGO)
 
+    @allure.step("Скролл до нижней кнопки Заказать")
     def scroll_to_button_bottom(self):
         self.scroll_to_element(MainPageLocators.ORDER_BUTTON_FOOTER)
 
+    @allure.step("Заполнить поля имя, фамилия, адрес, станция метро, номер телефона")
     def fill_personal_data(self, name="Илья", address="г. Москва, ул. Профсоюзная"):
         self.fill_field(OrderPageLocators.NAME_INPUT, name)
         self.fill_field(OrderPageLocators.SURNAME_INPUT, generate_cyrillic_surname())
@@ -28,10 +34,12 @@ class OrderPage(BasePage):
         self.fill_field(OrderPageLocators.PHONE_INPUT, generate_phone_number())
         self.click_element(OrderPageLocators.NEXT_BUTTON)
 
+    @allure.step("Выбрать станцию метро")
     def _select_metro_station(self):
         self.click_element(OrderPageLocators.METRO_INPUT)
         self.click_element(OrderPageLocators.METRO_STATION)
 
+    @allure.step("Заполнить поля дата начало аренды, срок аренды, цвет, комментарий")
     def fill_rental_data(self):
         self.fill_field(OrderPageLocators.DATE_INPUT, generate_tomorrow_date())
         date_field = self.wait.until(
@@ -49,10 +57,12 @@ class OrderPage(BasePage):
         self.fill_field(OrderPageLocators.COMMENT_INPUT, "Я вас жду у магазина")
         self.click_element(OrderPageLocators.ORDER_BUTTON_BOTTOM)
 
+    @allure.step("Появления окна с сообщением о заказе")
     def confirm_order(self):
         self.click_element(OrderPageLocators.CONFIRM_BUTTON)
         return self.is_element_visible(OrderPageLocators.SUCCESS_TITLE).is_displayed()
 
+    @allure.step("Заполнить поля имя, фамилия, адрес, станция метро, номер телефона")
     def fill_personal_data_for_bottom(self, name="александр"):
 
         self.fill_field(OrderPageLocators.NAME_INPUT, name)
@@ -62,6 +72,7 @@ class OrderPage(BasePage):
         self.fill_field(OrderPageLocators.PHONE_INPUT, generate_phone_number())
         self.click_element(OrderPageLocators.NEXT_BUTTON)
 
+    @allure.step("Заполнить поля дата начало аренды, срок аренды, цвет, комментарий")
     def fill_rental_data_for_bottom(self):
         self.fill_field(OrderPageLocators.DATE_INPUT, generate_date())
         date_field = self.wait.until(
@@ -79,5 +90,7 @@ class OrderPage(BasePage):
         self.fill_field(OrderPageLocators.COMMENT_INPUT, "")
         self.click_element(OrderPageLocators.ORDER_BUTTON_BOTTOM)
 
-
+    @allure.step("Нажать на нижнюю кнопку Заказать")
+    def click_button_order_bottom(self):
+        self.click_element(MainPageLocators.ORDER_BUTTON_FOOTER)
 
