@@ -33,10 +33,10 @@ Sprint_6/
 │ ├── main_page.py
 │ └── order_page.py
 └── test/
-├── init.py
-├── test_faq.py
-└── test_order_flow.py
-
+  ├── init.py
+  ├── test_faq.py
+  ├── test_order_flow.py
+  └── test_click_on_the_logo.py
 ## Установка
 1. Клонируйте репозиторий
 2. Установите зависимости:
