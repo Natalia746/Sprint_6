@@ -2,6 +2,8 @@ import allure
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver import Keys
+
 
 class BasePage:
 
@@ -46,9 +48,7 @@ class BasePage:
     def switch_to_new_window(self, window_index):
         self.driver.switch_to.window(self.driver.window_handles[window_index])
 
-    @allure.step("Закрыть текущее окно")
-    def close_current_window(self):
-        self.driver.close()
+
 
     @allure.step("Ожидание открытия {expected_number} окон/вкладок")
     def wait_for_number_of_windows(self, expected_number, timeout=10):
@@ -68,3 +68,12 @@ class BasePage:
         WebDriverWait(self.driver, timeout).until(
             EC.invisibility_of_element_located(locator)
         )
+
+    @allure.step("Нажать Enter")
+    def press_enter(self, locator):
+        element = self.is_element_visible(locator)
+        element.send_keys(Keys.ENTER)
+
+    @allure.step("Вернуться к исходному окну")
+    def switch_to_default_window(self):
+        self.driver.switch_to.window(self.driver.window_handles[0])

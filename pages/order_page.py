@@ -2,9 +2,6 @@ import allure
 from .base_page import BasePage
 from locators.order_page_locators import *
 from data_generator import *
-from selenium.webdriver import Keys
-from selenium.webdriver.support import expected_conditions as EC
-
 
 
 class OrderPage(BasePage):
@@ -43,7 +40,7 @@ class OrderPage(BasePage):
     def fill_rental_data(self):
         self.fill_field(OrderPageLocators.DATE_INPUT, generate_tomorrow_date())
         date_field = self.is_element_visible(OrderPageLocators.DATE_INPUT)
-        date_field.send_keys(Keys.ENTER)
+        self.press_enter(OrderPageLocators.DATE_INPUT)
         self.wait_for_element_invisibility(OrderPageLocators.CALENDAR)
         self.click_element(OrderPageLocators.RENTAL_PERIOD)
         self.click_element(OrderPageLocators.RENTAL_OPTION)
@@ -54,7 +51,7 @@ class OrderPage(BasePage):
     @allure.step("Появления окна с сообщением о заказе")
     def confirm_order(self):
         self.click_element(OrderPageLocators.CONFIRM_BUTTON)
-        return self.is_element_visible(OrderPageLocators.SUCCESS_TITLE).is_displayed()
+        return self.is_element_visible(OrderPageLocators.SUCCESS_TITLE)
 
     @allure.step("Заполнить поля имя, фамилия, адрес, станция метро, номер телефона")
     def fill_personal_data_for_bottom(self, name="александр"):
@@ -70,7 +67,7 @@ class OrderPage(BasePage):
     def fill_rental_data_for_bottom(self):
         self.fill_field(OrderPageLocators.DATE_INPUT, generate_date())
         date_field = self.is_element_visible(OrderPageLocators.DATE_INPUT)
-        date_field.send_keys(Keys.ENTER)
+        self.press_enter(OrderPageLocators.DATE_INPUT)
         self.wait_for_element_invisibility(OrderPageLocators.CALENDAR)
         self.click_element(OrderPageLocators.RENTAL_PERIOD)
         self.click_element(OrderPageLocators.RENTAL_OPTION)

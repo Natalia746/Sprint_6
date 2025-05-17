@@ -6,7 +6,7 @@ import curl
 
 @pytest.fixture
 def base_url():
-    return curl.base_url
+    return curl.BASE_URL
 
 @pytest.fixture(scope="function")
 def driver():
@@ -24,5 +24,8 @@ def faq_page(driver, base_url):
 @pytest.fixture
 def order_page(driver, base_url):
     page = OrderPage(driver, base_url)
-    return page
+    yield page
+    # Автоматический возврат к исходному окну после теста
+    if len(driver.window_handles) > 1:
+        page.switch_to_default_window()
 
