@@ -42,15 +42,9 @@ class OrderPage(BasePage):
     @allure.step("Заполнить поля дата начало аренды, срок аренды, цвет, комментарий")
     def fill_rental_data(self):
         self.fill_field(OrderPageLocators.DATE_INPUT, generate_tomorrow_date())
-        date_field = self.wait.until(
-            EC.visibility_of_element_located(OrderPageLocators.DATE_INPUT)
-        )
+        date_field = self.is_element_visible(OrderPageLocators.DATE_INPUT)
         date_field.send_keys(Keys.ENTER)
-
-        # Ожидание закрытия календаря
-        self.wait.until(
-            EC.invisibility_of_element_located((By.CLASS_NAME, "react-datepicker"))
-        )
+        self.wait_for_element_invisibility(OrderPageLocators.CALENDAR)
         self.click_element(OrderPageLocators.RENTAL_PERIOD)
         self.click_element(OrderPageLocators.RENTAL_OPTION)
         self.click_element(OrderPageLocators.COLOR_CHECKBOX_BLACK)
@@ -75,15 +69,9 @@ class OrderPage(BasePage):
     @allure.step("Заполнить поля дата начало аренды, срок аренды, цвет, комментарий")
     def fill_rental_data_for_bottom(self):
         self.fill_field(OrderPageLocators.DATE_INPUT, generate_date())
-        date_field = self.wait.until(
-            EC.visibility_of_element_located(OrderPageLocators.DATE_INPUT)
-        )
+        date_field = self.is_element_visible(OrderPageLocators.DATE_INPUT)
         date_field.send_keys(Keys.ENTER)
-
-
-        self.wait.until(
-            EC.invisibility_of_element_located((By.CLASS_NAME, "react-datepicker"))
-        )
+        self.wait_for_element_invisibility(OrderPageLocators.CALENDAR)
         self.click_element(OrderPageLocators.RENTAL_PERIOD)
         self.click_element(OrderPageLocators.RENTAL_OPTION)
         self.click_element(OrderPageLocators.COLOR_CHECKBOX_GREY)

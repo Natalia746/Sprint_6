@@ -36,5 +36,5 @@ class OrderPageLocators:
     # Модальные окна
     MODAL_WINDOW = (By.CLASS_NAME, "Order_Modal__YZ-d3")
     SUCCESS_TITLE = (By.XPATH, "//div[contains(text(), 'Заказ оформлен')]")
-
+    CALENDAR = (By.CLASS_NAME, "react-datepicker")
 

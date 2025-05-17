@@ -62,3 +62,9 @@ class BasePage:
         WebDriverWait(self.driver, timeout).until(
             EC.url_contains(text)
         )
+
+    @allure.step("Ожидание невидимости элемента")
+    def wait_for_element_invisibility(self, locator, timeout=10):
+        WebDriverWait(self.driver, timeout).until(
+            EC.invisibility_of_element_located(locator)
+        )
