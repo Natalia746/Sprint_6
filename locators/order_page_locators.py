@@ -22,7 +22,6 @@ class OrderPageLocators:
     METRO_STATION = (By.XPATH, "//li[@data-value='3']")
     RENTAL_PERIOD = (By.CLASS_NAME, "Dropdown-placeholder")
     RENTAL_OPTION = (By.CSS_SELECTOR, "div.Dropdown-option:nth-child(2)")
-    RENTAL_PERIOD_FOR_BOTTOM = (By.CLASS_NAME, "Dropdown-placeholder")
     COLOR_CHECKBOX_BLACK = (By.ID, "black")
     COLOR_CHECKBOX_GREY = (By.ID, "grey")
     RENTAL_OPTION_BOTTOM = (By.CSS_SELECTOR, "div.Dropdown-option:nth-child(6)")
@@ -31,7 +30,6 @@ class OrderPageLocators:
     NEXT_BUTTON = (By.CSS_SELECTOR, ".Button_Button__ra12g.Button_Middle__1CSJM")
     ORDER_BUTTON_BOTTOM = (By.XPATH, "//div[contains(@class, 'Order_Content')]//button[text()='Заказать']")
     CONFIRM_BUTTON = (By.XPATH, "//div[contains(@class,'Order_Buttons__1xGrp')]//button[text()='Да']")
-    STATUS_BUTTON = (By.XPATH, "//button[contains(text(), 'Посмотреть статус')]")
 
     # Модальные окна
     MODAL_WINDOW = (By.CLASS_NAME, "Order_Modal__YZ-d3")
