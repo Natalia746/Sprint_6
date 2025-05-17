@@ -2,11 +2,11 @@ import pytest
 from selenium import webdriver
 from pages.faq_page import FAQPage
 from pages.order_page import OrderPage
-import curl
+from curl import *
 
 @pytest.fixture
 def base_url():
-    return curl.BASE_URL
+    return BASE_URL
 
 @pytest.fixture(scope="function")
 def driver():
