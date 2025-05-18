@@ -6,7 +6,7 @@ class TestTrafficFromClick:
     @allure.feature("Нажатие на логотип Самоката")
     @allure.story("Позитивный сценарий оформления")
     @allure.title("Проверка перехода на главную страницу при нажатии на логотип Самоката")
-    def test_successful_transition_click_logo(self, order_page, base_url):
+    def test_successful_transition_click_logo(self, order_page):
         with allure.step("Инициализация страницы заказа"):
             order_page.open()
 

@@ -3,14 +3,14 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver import Keys
-
+from curl import *
 
 class BasePage:
 
-    def __init__(self, driver: WebDriver, base_url, timeout=10):
+    def __init__(self, driver: WebDriver, timeout=10):
         self.driver = driver
         self.wait = WebDriverWait(driver, timeout)
-        self.base_url = base_url
+        self.base_url = BASE_URL
 
     @allure.step("Открыть url главной страницы")
     def open(self):
